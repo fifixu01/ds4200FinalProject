@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    #vis.vega-embed {
+      width: 100%;
+      display: flex;
+    }
+
+    #vis.vega-embed details,
+    #vis.vega-embed details summary {
+      position: relative;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-lite@6.1.0"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-bfb3f248c70b1bdf187cecbe19b968e4"}, "mark": {"type": "line", "point": true}, "encoding": {"color": {"field": "route_name", "legend": {"title": "Route"}, "scale": {"domain": ["Fairmount Line", "Fitchburg Line", "Framingham/Worcester Line", "Franklin/Foxboro Line", "Greenbush Line", "Haverhill Line", "Kingston/Plymouth Line", "Lowell Line", "Middleborough/Lakeville Line", "Needham Line", "Newburyport/Rockport Line", "Providence/Stoughton Line"], "range": ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf", "#aec7e8", "#98df8a"]}, "type": "nominal"}, "opacity": {"condition": {"param": "param_54c87768a7d329c5", "value": 1.0}, "value": 0.1}, "strokeWidth": {"condition": {"param": "param_54c87768a7d329c5", "value": 3}, "value": 1}, "tooltip": [{"field": "year", "title": "Year", "type": "ordinal"}, {"field": "route_name", "title": "Route", "type": "nominal"}, {"field": "average_ons", "format": ".2f", "title": "Avg Passengers", "type": "quantitative"}], "x": {"axis": {"labelAngle": -45}, "field": "year", "title": "Year", "type": "ordinal"}, "y": {"field": "average_ons", "title": "Average Passengers", "type": "quantitative"}}, "height": 400, "params": [{"name": "param_54c87768a7d329c5", "select": {"type": "point", "fields": ["route_name"]}, "bind": {"input": "select", "options": [null, "Fairmount Line", "Fitchburg Line", "Framingham/Worcester Line", "Franklin/Foxboro Line", "Greenbush Line", "Haverhill Line", "Kingston/Plymouth Line", "Lowell Line", "Middleborough/Lakeville Line", "Needham Line", "Newburyport/Rockport Line", "Providence/Stoughton Line"], "labels": ["All Routes", "Fairmount Line", "Fitchburg Line", "Framingham/Worcester Line", "Franklin/Foxboro Line", "Greenbush Line", "Haverhill Line", "Kingston/Plymouth Line", "Lowell Line", "Middleborough/Lakeville Line", "Needham Line", "Newburyport/Rockport Line", "Providence/Stoughton Line"], "name": "Route: "}, "value": []}], "title": "MBTA Commuter Rail Ridership Trends Over Time", "width": 700, "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json", "datasets": {"data-bfb3f248c70b1bdf187cecbe19b968e4": [{"year": 2012, "route_name": "Fairmount Line", "average_ons": 5.4475524475524475}, {"year": 2012, "route_name": "Fitchburg Line", "average_ons": 16.542797494780793}, {"year": 2012, "route_name": "Framingham/Worcester Line", "average_ons": 26.042769857433807}, {"year": 2012, "route_name": "Franklin/Foxboro Line", "average_ons": 23.60655737704918}, {"year": 2012, "route_name": "Greenbush Line", "average_ons": 20.246511627906976}, {"year": 2012, "route_name": "Haverhill Line", "average_ons": 14.594989561586639}, {"year": 2012, "route_name": "Kingston/Plymouth Line", "average_ons": 26.37799043062201}, {"year": 2012, "route_name": "Lowell Line", "average_ons": 24.420398009950247}, {"year": 2012, "route_name": "Middleborough/Lakeville Line", "average_ons": 24.782178217821784}, {"year": 2012, "route_name": "Needham Line", "average_ons": 15.885245901639344}, {"year": 2012, "route_name": "Newburyport/Rockport Line", "average_ons": 21.676470588235293}, {"year": 2012, "route_name": "Providence/Stoughton Line", "average_ons": 38.87341772151899}, {"year": 2018, "route_name": "Fairmount Line", "average_ons": 8.236024844720497}, {"year": 2018, "route_name": "Fitchburg Line", "average_ons": 15.581239530988274}, {"year": 2018, "route_name": "Framingham/Worcester Line", "average_ons": 25.117250673854446}, {"year": 2018, "route_name": "Franklin/Foxboro Line", "average_ons": 24.063917525773196}, {"year": 2018, "route_name": "Greenbush Line", "average_ons": 28.305555555555557}, {"year": 2018, "route_name": "Haverhill Line", "average_ons": 15.261802575107296}, {"year": 2018, "route_name": "Kingston/Plymouth Line", "average_ons": 29.13397129186603}, {"year": 2018, "route_name": "Lowell Line", "average_ons": 27.3125}, {"year": 2018, "route_name": "Middleborough/Lakeville Line", "average_ons": 33.975247524752476}, {"year": 2018, "route_name": "Needham Line", "average_ons": 18.687150837988828}, {"year": 2018, "route_name": "Newburyport/Rockport Line", "average_ons": 20.042838018741634}, {"year": 2018, "route_name": "Providence/Stoughton Line", "average_ons": 40.70886075949367}, {"year": 2024, "route_name": "Fairmount Line", "average_ons": 8.786427145708583}, {"year": 2024, "route_name": "Fitchburg Line", "average_ons": 11.038062283737025}, {"year": 2024, "route_name": "Framingham/Worcester Line", "average_ons": 19.107416879795398}, {"year": 2024, "route_name": "Franklin/Foxboro Line", "average_ons": 15.899082568807339}, {"year": 2024, "route_name": "Greenbush Line", "average_ons": 14.444015444015443}, {"year": 2024, "route_name": "Haverhill Line", "average_ons": 10.25531914893617}, {"year": 2024, "route_name": "Kingston/Plymouth Line", "average_ons": 20.905511811023622}, {"year": 2024, "route_name": "Lowell Line", "average_ons": 22.56989247311828}, {"year": 2024, "route_name": "Middleborough/Lakeville Line", "average_ons": 23.817857142857143}, {"year": 2024, "route_name": "Needham Line", "average_ons": 15.197994987468672}, {"year": 2024, "route_name": "Newburyport/Rockport Line", "average_ons": 15.170802919708029}, {"year": 2024, "route_name": "Providence/Stoughton Line", "average_ons": 26.495132127955493}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>
