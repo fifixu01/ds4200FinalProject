@@ -1,69 +1,130 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>D3 Hourly Passengers</title>
+  <title>D3 Passenger Distribution by Hour</title>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
-    body { margin: 0; font-family: Arial; }
-    .bar { fill: steelblue; }
-    .bar:hover { fill: orange; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: white;
+    }
+
+    .chart-title {
+      font-size: 22px;
+      font-weight: bold;
+      text-anchor: middle;
+      fill: #243b6b;
+    }
+
+    .axis-label {
+      font-size: 15px;
+      font-weight: 600;
+      fill: #333;
+    }
+
+    .bar {
+      fill: steelblue;
+    }
+
+    .bar:hover {
+      fill: orange;
+    }
+
+    .tooltip {
+      position: absolute;
+      background: rgba(255,255,255,0.97);
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      pointer-events: none;
+      opacity: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
   </style>
 </head>
 <body>
-  <svg width="900" height="500"></svg>
+  <div id="tooltip" class="tooltip"></div>
+  <svg width="900" height="520"></svg>
 
   <script>
+    const data = [{"hour": 0, "total_passengers": 16880}, {"hour": 1, "total_passengers": 8313}, {"hour": 2, "total_passengers": 5094}, {"hour": 3, "total_passengers": 3879}, {"hour": 4, "total_passengers": 2820}, {"hour": 5, "total_passengers": 5389}, {"hour": 6, "total_passengers": 11943}, {"hour": 7, "total_passengers": 26457}, {"hour": 8, "total_passengers": 24164}, {"hour": 9, "total_passengers": 8796}, {"hour": 10, "total_passengers": 12169}, {"hour": 11, "total_passengers": 42479}, {"hour": 12, "total_passengers": 78079}, {"hour": 13, "total_passengers": 73010}, {"hour": 14, "total_passengers": 23281}, {"hour": 15, "total_passengers": 17499}, {"hour": 16, "total_passengers": 29422}, {"hour": 17, "total_passengers": 34632}, {"hour": 18, "total_passengers": 21081}, {"hour": 19, "total_passengers": 14140}, {"hour": 20, "total_passengers": 18959}, {"hour": 21, "total_passengers": 44309}, {"hour": 22, "total_passengers": 83995}, {"hour": 23, "total_passengers": 50845}];
+
     const svg = d3.select("svg");
-    const margin = {top: 50, right: 20, bottom: 50, left: 80};
+    const tooltip = d3.select("#tooltip");
+
+    const margin = { top: 70, right: 30, bottom: 90, left: 100 };
     const width = 900 - margin.left - margin.right;
-    const height = 500 - margin.top - margin.bottom;
+    const height = 520 - margin.top - margin.bottom;
 
     const g = svg.append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    d3.json("hourly_data.json").then(data => {
-
-      data.forEach(d => {
-        d.hour = +d.hour;
-        d.total_passengers = +d.total_passengers;
-      });
-
-      const x = d3.scaleBand()
-        .domain(data.map(d => d.hour))
-        .range([0, width])
-        .padding(0.2);
-
-      const y = d3.scaleLinear()
-        .domain([0, d3.max(data, d => d.total_passengers)])
-        .nice()
-        .range([height, 0]);
-
-      g.append("g")
-        .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(x));
-
-      g.append("g")
-        .call(d3.axisLeft(y));
-
-      g.selectAll(".bar")
-        .data(data)
-        .enter()
-        .append("rect")
-        .attr("class", "bar")
-        .attr("x", d => x(d.hour))
-        .attr("y", d => y(d.total_passengers))
-        .attr("width", x.bandwidth())
-        .attr("height", d => height - y(d.total_passengers));
-
-      g.append("text")
-        .attr("x", width / 2)
-        .attr("y", -10)
-        .attr("text-anchor", "middle")
-        .style("font-size", "20px")
-        .text("Passenger Distribution by Hour");
-
+    data.forEach(d => {
+      d.hour = +d.hour;
+      d.total_passengers = +d.total_passengers;
     });
+
+    const x = d3.scaleBand()
+      .domain(data.map(d => d.hour))
+      .range([0, width])
+      .padding(0.2);
+
+    const y = d3.scaleLinear()
+      .domain([0, d3.max(data, d => d.total_passengers)])
+      .nice()
+      .range([height, 0]);
+
+    g.append("text")
+      .attr("class", "chart-title")
+      .attr("x", width / 2)
+      .attr("y", -30)
+      .text("Passenger Distribution by Hour");
+
+    g.append("g")
+      .attr("transform", `translate(0,${height})`)
+      .call(d3.axisBottom(x).tickFormat(d3.format("d")));
+
+    g.append("g")
+      .call(d3.axisLeft(y));
+
+    g.append("text")
+      .attr("class", "axis-label")
+      .attr("x", width / 2)
+      .attr("y", height + 60)
+      .attr("text-anchor", "middle")
+      .text("Hour of Day");
+
+    g.append("text")
+      .attr("class", "axis-label")
+      .attr("transform", "rotate(-90)")
+      .attr("x", -height / 2)
+      .attr("y", -75)
+      .attr("text-anchor", "middle")
+      .text("Total Passengers");
+
+    g.selectAll(".bar")
+      .data(data)
+      .enter()
+      .append("rect")
+      .attr("class", "bar")
+      .attr("x", d => x(d.hour))
+      .attr("y", d => y(d.total_passengers))
+      .attr("width", x.bandwidth())
+      .attr("height", d => height - y(d.total_passengers))
+      .on("mousemove", function(event, d) {
+        tooltip
+          .style("opacity", 1)
+          .html(`<strong>Hour:</strong> ${d.hour}<br><strong>Total Passengers:</strong> ${Math.round(d.total_passengers)}`)
+          .style("left", (event.pageX + 12) + "px")
+          .style("top", (event.pageY - 28) + "px");
+      })
+      .on("mouseleave", function() {
+        tooltip.style("opacity", 0);
+      });
   </script>
 </body>
 </html>
