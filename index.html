@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MBTA Commuter Rail Analysis</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=2" />
 </head>
 <body>
   <header class="hero">
     <h1>MBTA Commuter Rail Analysis</h1>
     <p>
-      This project explores patterns in MBTA commuter rail usage to better understand how public transportation is utilized across the Boston area.
+      This project explores how MBTA commuter rail ridership changes across routes and time in order to better understand when demand is highest, which lines are the most stable, and how passenger movement shifts throughout the day. Rather than looking at the system as a single total, we break ridership down into multiple views so that patterns in timing, route behavior, and passenger flow become easier to compare.
     </p>
     <p>
       By Fifi, Samantha, Carolyn
@@ -21,27 +21,58 @@
   <main class="container">
 
     <section class="section">
+      <h2>Data at a Glance</h2>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">15,754</div>
+          <div class="stat-label">Rows</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number">19</div>
+          <div class="stat-label">Columns</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number">12</div>
+          <div class="stat-label">Routes</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number">4</div>
+          <div class="stat-label">Ridership Measures</div>
+        </div>
+      </div>
+
+      <p>
+        The dataset used in this project comes from the MBTA Open Data Portal and contains more than 15,000 observations describing commuter rail activity. Key fields include route name, stop time, date, day type, average boardings, average alightings, and average onboard passenger load. These variables allow us to study ridership not only at the route level, but also across time-based dimensions such as hour of day and longer-term yearly trends.
+      </p>
+
+      <p>
+        In total, the dataset contains 19 columns spanning several types of variables. It includes categorical variables such as route name, route ID, direction, and day type; temporal variables such as date, stop time, hour, month, and season; and numeric ridership measures such as average boardings, average alightings, average load, and total passengers. This combination makes the dataset especially useful because it supports both broad system-level analysis and more detailed route-level comparisons.
+      </p>
+
+      <p>
+        Before visualization, the data was cleaned by removing duplicates, standardizing route names, converting dates into usable time variables, and creating additional derived fields such as hour, year, and total passengers. These transformations made it possible to compare system-wide demand patterns with route-specific detail while keeping the visualizations consistent across the project.
+      </p>
+    </section>
+
+    <section class="section">
       <h2>Project Overview</h2>
       <p>
-        This project explores patterns in MBTA commuter rail usage to better understand how public transportation is utilized across the Boston area. By analyzing ridership data across routes, time periods, and service types, we aim to identify meaningful trends in passenger behavior.
+        Public transit systems are shaped by recurring patterns in time, geography, and rider behavior. In a commuter rail system like the MBTA, demand is not evenly spread across the day or across routes. Some lines experience sharper surges during commuting hours, while others remain more stable and predictable. This project focuses on identifying those differences through a series of visualizations that move from broad system-level patterns to more route-specific views.
       </p>
       <p>
-        These patterns provide insight into when and where demand is highest, as well as how ridership varies over time. Understanding these dynamics is important as Boston continues to grow and evolve, helping improve efficiency, reduce congestion, and support better transit planning.
+        Our goal is to show how ridership changes over time, when passenger demand is concentrated, which routes are the most consistent, and how riders flow through the network across different parts of the day. Together, these views provide a clearer picture of how commuter rail service is actually being used and how those usage patterns could support future planning, scheduling, and service decisions.
       </p>
     </section>
 
     <section class="section">
-      <h2>About the Data</h2>
+      <h2>Sources</h2>
       <p>
-        The dataset used in this project comes from the MBTA Open Data Portal and contains over 15,000 observations and more than 10 attributes. Key variables include route name, stop time, date, day type, and measures of passenger activity such as average boardings, alightings, and total passenger load.
+        The primary data source for this project is the MBTA Open Data Portal, which provides operational ridership information for commuter rail service. We also reviewed external background materials on MBTA performance and reliability to better understand how ridership analysis connects to broader transit planning questions. These sources help frame the project by linking our visual analysis to larger conversations about transit demand, service quality, and long-term planning.
       </p>
-      <p>
-        The data includes both categorical and continuous variables, allowing analysis across routes and time. It was cleaned by removing duplicates, handling missing values, and creating derived features such as hour and total passengers.
-      </p>
-    </section>
-
-    <section class="section">
-      <h2>References</h2>
       <ul>
         <li>
           <a href="https://www.researchgate.net/publication/398268981_Forecasting_MBTA_Transit_Dynamics_A_Performance_Benchmarking_of_Statistical_and_Machine_Learning_Models" target="_blank">
@@ -58,48 +89,66 @@
 
     <section class="viz-card">
       <h2>1. Ridership Trends Over Time</h2>
+      <p class="interaction-tip">
+        <strong>How to interact:</strong> Use the route dropdown to focus on a specific commuter rail line, and the boxplot below will update to show how that selected route’s ridership is distributed across years.
+      </p>
       <p class="takeaway">
-        This visualization highlights how ridership has changed over time across routes, helping identify long-term trends and route stability.
+        This visualization shows that ridership does not evolve uniformly across the MBTA commuter rail system. Some routes appear to follow steadier long-term patterns, while others fluctuate more noticeably from year to year, which suggests that certain lines may be more sensitive to external changes or shifting demand. The linked boxplot strengthens this interpretation by showing the spread of values for the selected route, making it easier to compare not only whether ridership is rising or falling over time, but also whether that route’s demand is relatively stable or highly variable within each year.
       </p>
       <iframe src="charts/line_chart.html"></iframe>
     </section>
 
     <section class="viz-card">
-      <h2>2. Average Passengers On Board by Hour and Route</h2>
+      <h2>2. Passenger Distribution by Hour</h2>
+      <p class="interaction-tip">
+        <strong>How to interact:</strong> Hover over each bar to view the exact hour and passenger total so you can compare how ridership rises and falls across the day.
+      </p>
       <p class="takeaway">
-        This heatmap shows how passenger load varies across routes and time of day, highlighting peak commuting periods.
+        This D3 chart highlights the overall daily rhythm of commuter rail demand by showing how passenger totals are distributed across hours. Rather than being evenly spread throughout the day, ridership is concentrated in a limited number of time windows, which strongly reflects the commute-oriented nature of the system. As a broad system-level view, this chart is useful because it establishes when demand is highest before later visualizations break that same pattern down more specifically by route, load, and direction of passenger movement.
+      </p>
+      <iframe src="charts/d3_hourly_bar.html?v=3"></iframe>
+    </section>
+
+    <section class="viz-card">
+      <h2>3. Average Passengers On Board by Hour and Route</h2>
+      <p class="interaction-tip">
+        <strong>How to interact:</strong> Hover over any cell in the heatmap to see the route, hour, and average onboard passenger load for that specific route-hour combination.
+      </p>
+      <p class="takeaway">
+        While the previous chart shows that commuter rail demand peaks at certain hours overall, this heatmap reveals that those peaks are not distributed evenly across routes. Some lines carry heavier onboard loads during particular periods of the day, while others remain more moderate or peak at slightly different times. This makes clear that a single system-wide hourly pattern cannot fully describe commuter rail behavior, because the actual intensity and timing of passenger demand vary meaningfully depending on the route. In that sense, the heatmap works as a breakout view that adds route-level detail to the broader hourly pattern seen above.
       </p>
       <iframe src="charts/heatmap.html"></iframe>
     </section>
 
     <section class="viz-card">
-      <h2>3. Most Consistent Routes</h2>
+      <h2>4. Most Consistent Routes</h2>
       <p class="takeaway">
-        This chart compares route consistency, showing which routes have stable ridership and which experience fluctuations.
+        This chart shifts the focus from ridership volume to ridership stability by comparing the load standard deviation of each route. Routes with lower values have more predictable onboard passenger levels over time, suggesting more regular and stable demand, while routes with higher values experience greater fluctuations and may be harder to plan around consistently. This matters because predictability is an important operational dimension of transit service: even a route with moderate ridership may be easier to manage if its demand remains steady, whereas more variable routes may require greater flexibility in scheduling or resource allocation.
+      </p>
+      <p class="note">
+        Load standard deviation is calculated as the standard deviation of average onboard passengers for each route. Lower values indicate more consistent ridership patterns.
       </p>
       <img src="charts/consistency.png" />
     </section>
 
     <section class="viz-card">
-      <h2>4. Passenger Distribution by Hour</h2>
-      <p class="takeaway">
-        This D3 chart shows how ridership varies throughout the day, revealing peak and off-peak travel periods.
+      <h2>5. Average Boardings vs Alightings by Hour</h2>
+      <p class="interaction-tip">
+        <strong>How to interact:</strong> Hover over the lines or manually select an area and zoom in so you can compare boardings and alightings more closely during specific parts of the day.
       </p>
-      <iframe src="charts/d3_hourly_bar.html?v=2"></iframe>
-    </section>
-
-    <section class="viz-card">
-      <h2>5. Passenger Distribution by Route and Hour</h2>
       <p class="takeaway">
-        This treemap shows how passenger volume is distributed across routes and times, highlighting where ridership is most concentrated.
+        This visualization adds a different layer of insight by separating passenger movement into entries and exits rather than combining them into a single total. Comparing average boardings and average alightings across hours makes it possible to see whether these two forms of movement rise and fall together or diverge at certain times, which helps reveal changing travel dynamics throughout the day. That makes this chart an important complement to the total-passenger and heatmap views, because it highlights that ridership is not only about how much demand exists, but also about how that demand is flowing through the system.
       </p>
-      <iframe src="charts/treemap.html"></iframe>
+      <iframe src="charts/boarding_vs_alighting.html"></iframe>
     </section>
 
     <section class="viz-card">
       <h2>6. Passenger Flow: Day Type to Route to Time of Day</h2>
+      <p class="interaction-tip">
+        <strong>How to interact:</strong> Hover over the flows in the Sankey diagram to see how passenger volume moves from day type to route and then into different time-of-day categories.
+      </p>
       <p class="takeaway">
-        This Sankey diagram provides a high-level view of how passengers flow through the system, linking day type, routes, and time of day.
+        The Sankey diagram provides a more holistic summary of the system by connecting day type, major routes, and broad time-of-day buckets in a single flow-based view. Instead of focusing on exact hourly values, it emphasizes how passenger volume is distributed through the structure of the network, making it easier to see which routes absorb the largest share of movement and how that movement continues into different periods of the day. This higher-level perspective is valuable because it ties together multiple dimensions at once and helps show how the system functions as an interconnected whole rather than as a collection of separate charts.
       </p>
       <iframe src="charts/sankey.html"></iframe>
     </section>
@@ -107,10 +156,10 @@
     <section class="section">
       <h2>Summary of Findings</h2>
       <p>
-        Ridership patterns are strongly influenced by both time and route. Peak hours show concentrated demand, while some routes demonstrate more consistent usage than others.
+        Across these visualizations, one of the clearest patterns is that MBTA commuter rail demand is highly concentrated in particular time windows and is not distributed evenly across routes. Some lines appear relatively stable and predictable, while others show sharper fluctuations in onboard load and stronger hourly peaks. This suggests that transit demand should be understood as both temporal and route-specific rather than as a single system-wide average.
       </p>
       <p>
-        These insights can inform better transit planning and resource allocation, and future analysis could incorporate additional external factors such as weather or service disruptions.
+        Taken together, the charts show that ridership analysis becomes much more informative when multiple perspectives are combined. System-level views reveal when demand is highest, route-level views show where that demand differs, and flow-based views help explain how riders move through the network. These insights can support better scheduling and service planning, while future work could expand the analysis with additional geographic context or a broader set of observed service days.
       </p>
     </section>
 
